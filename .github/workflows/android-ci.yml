@@ -1,11 +1,9 @@
 name: Android CI
-
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,25 +27,20 @@ jobs:
         run: |
           set -eux
           sdkmanager --version || true
-
           # Aceita licenças; ignora o "Broken pipe" do 'yes'
           yes | sdkmanager --licenses || true
-
           # Instala pacotes necessários (1ª tentativa)
           sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0" || true
-
           # Confere e tenta novamente se faltar algo
           sdkmanager --list | head -n 50 || true
           if ! [ -d "$ANDROID_SDK_ROOT/build-tools/34.0.0" ]; then
             sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
           fi
-
       - name: Gradle build (assembleDebug)
         uses: gradle/gradle-build-action@v3
         with:
           gradle-version: 8.7
           arguments: assembleDebug
-
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
