@@ -1,0 +1,18 @@
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-feature android:name="android.hardware.microphone" android:required="false"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- SAF dispensa READ_EXTERNAL_STORAGE no Android 10+ -->
+
+    <application android:label="Karaokedafamiliagrandi" android:allowBackup="true">
+        <activity android:name=".ui.LocalPlayerActivity" android:exported="false"
+            android:supportsPictureInPicture="true" />
+        <activity android:name=".MainActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
