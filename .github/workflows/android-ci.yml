@@ -18,16 +18,19 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Instala SDK com a sintaxe correta: pacotes em linha, separados por vírgula
-      - name: Set up Android SDK
+      # Instala somente as commandline-tools e depois usa sdkmanager manualmente
+      - name: Install Android commandline-tools
         uses: android-actions/setup-android@v3
         with:
+          cmdline-tools-version: latest
           accept-android-sdk-licenses: true
-          packages: platform-tools, "platforms;android-34", "build-tools;34.0.0"
 
-      # Fallback: garante instalação via sdkmanager caso algum pacote falte
-      - name: Ensure Android packages
+      # Garante que os pacotes certos estão instalados (via sdkmanager)
+      - name: Install Android packages
+        shell: bash
         run: |
+          set -eux
+          sdkmanager --version
           yes | sdkmanager --licenses
           sdkmanager --install "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
@@ -41,3 +44,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
