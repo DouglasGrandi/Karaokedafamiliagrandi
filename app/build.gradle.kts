@@ -39,7 +39,7 @@ android {
         compose = true
     }
     composeOptions {
-        { kotlinCompilerExtensionVersion = "1.5.11" }
+        { kotlinCompilerExtensionVersion = "1.5.14" }
     }
 
     // Sintaxe correta no Kotlin DSL
